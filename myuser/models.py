@@ -2,26 +2,20 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    # Common fields for all users
-    is_vendor = models.BooleanField(default=False)
+    # Add any additional fields you need
     is_customer = models.BooleanField(default=False)
-    # Add any other shared fields
-    
-    def __str__(self):
-        return self.username
+    is_vendor = models.BooleanField(default=False)
 
-class VendorGroup(models.Model):
-    name = models.CharField(max_length=80, unique=True)
-    members = models.ManyToManyField(CustomUser, related_name='vendor_groups')
+class Customer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='customer_profile')
+    address = models.TextField()
+    phone_number = models.CharField(max_length=15)
+    profile_picture = models.ImageField(upload_to='customer_profiles/', blank=True, null=True)
+    # Add any other customer-specific fields
 
-class VendorPermission(models.Model):
-    name = models.CharField(max_length=255)
-    users = models.ManyToManyField(CustomUser, related_name='vendor_permissions')
-
-class CustomerGroup(models.Model):
-    name = models.CharField(max_length=80, unique=True)
-    members = models.ManyToManyField(CustomUser, related_name='customer_groups')
-
-class CustomerPermission(models.Model):
-    name = models.CharField(max_length=255)
-    users = models.ManyToManyField(CustomUser, related_name='customer_permissions')
+class Vendor(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='vendor_profile')
+    company_name = models.CharField(max_length=100)
+    description = models.TextField()
+    logo = models.ImageField(upload_to='vendor_logos/', blank=True, null=True)
+    # Add any other vendor-specific fields
