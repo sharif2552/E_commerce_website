@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ vendor.name }} Dashboard</h1>
+<h2>Products</h2>
+<ul>
+    {% for product in products %}
+    <li>
+        <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'vendor_product_create' vendor.id %}">Add New Product</a>
+{% endblock %}
