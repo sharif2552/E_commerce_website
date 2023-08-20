@@ -32,10 +32,7 @@ AUTH_USER_MODEL = 'myuser.CustomUser'
 #AUTH_USER_MODEL = 'myuser.Customer'
 #AUTH_USER_MODEL = 'myuser.Vendor'
 
-AUTHENTICATION_BACKENDS = [
-    'myuser.backends.CustomUserBackend',
-    'django.contrib.auth.backends.ModelBackend',  # Include the default backend as well
-]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -144,3 +141,11 @@ STATICFILES_DIRS = [
     # Add other app static directories as needed
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# settings.py
+
+# Define the base URL and file system path where media files will be stored
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

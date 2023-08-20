@@ -17,21 +17,24 @@ def login_view(request):
 
 def signup_view(request):
     if request.method == 'POST':
-        user_type = request.POST.get('user_type')  # Assuming a radio button or select field for user type
+        user_type = 'customer'  # Assuming a radio button or select field for user type
         if user_type == 'customer':
             user_form = CustomerSignUpForm(request.POST)
-            profile_form = CustomerProfileForm(request.POST)
+            profile_form = CustomerProfileForm(request.POST, request.FILES)
+
         elif user_type == 'vendor':
             user_form = VendorSignUpForm(request.POST)
             profile_form = VendorProfileForm(request.POST)
         
         if user_form.is_valid() and profile_form.is_valid():
+            print(profile_form.cleaned_data)
+            print(profile_form.cleaned_data['profile_picture'])
             user = user_form.save()
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
             login(request, user)
-            return redirect('home')  # Redirect to the home page after successful signup and login
+            return redirect('products:homepage')  # Redirect to the home page after successful signup and login
     else:
         user_form = CustomerSignUpForm()
         profile_form = CustomerProfileForm()

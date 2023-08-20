@@ -3,68 +3,25 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Responsive Registration Form | CodingLab</title>
+  <title>Registration Form</title>
   <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  <!-- Add Bootstrap CSS link here -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-      <form action="{% url 'myuser:signup' %}">
+      <form action="{% url 'myuser:signup' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="user-details">
-          <div class="input-box">
-            <span class="details">Full Name</span>
-            <input type="text" name="full_name" placeholder="Enter your name" required>
-          </div>
-          <div class="input-box">
-            <span class="details">User Type</span>
-            <label><input type="radio" name="user_type" value="customer" required> Customer</label>
-            <label><input type="radio" name="user_type" value="vendor" required> Vendor</label>
-        </div>
-          <div class="input-box">
-            <span class="details">Username</span>
-            <input type="text" name="username" placeholder="Enter your username" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Email</span>
-            <input type="email" name="email" placeholder="Enter your email" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Phone Number</span>
-            <input type="text" name="phone_number" placeholder="Enter your number" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Password</span>
-            <input type="password" name="password" placeholder="Enter your password" required>
-          </div>
-          <div class="input-box">
-            <span class="details">Confirm Password</span>
-            <input type="password" name="confirm_password" placeholder="Confirm your password" required>
-          </div>
+          {{ user_form.as_p }}
         </div>
         <div class="gender-details">
-          <input type="radio" name="gender" id="dot-1">
-          <input type="radio" name="gender" id="dot-2">
-          <input type="radio" name="gender" id="dot-3">
-          <span class="gender-title">Gender</span>
-          <div class="category">
-            <label for="dot-1">
-              <span class="dot one"></span>
-              <span class="gender">Male</span>
-            </label>
-            <label for="dot-2">
-              <span class="dot two"></span>
-              <span class="gender">Female</span>
-            </label>
-            <label for="dot-3">
-              <span class="dot three"></span>
-              <span class="gender">Prefer not to say</span>
-            </label>
-          </div>
+          {{ profile_form.as_p }}
         </div>
         <div class="button">
-          <input type="submit" value="Register">
+          <button type="submit">Register</button>
         </div>
       </form>
       <div class="text-center p-t-136">
@@ -72,8 +29,8 @@
           <span style="font-weight: bold;">Already have an account</span>
         </a>
       </div>
-      
     </div>
   </div>
+  <!-- Add Bootstrap JS scripts here -->
 </body>
 </html>
