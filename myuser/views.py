@@ -124,7 +124,7 @@ def vendor_login_view(request):
         if user is not None:
             print("valid user")
             login(request, user)
-            return redirect('products:homepage')  # Redirect to the home page after successful login
+            return redirect('vendors:vendor_dashboard')  # Redirect to the home page after successful login
         else:
             print('login failed')
             # Display an error message

@@ -6,9 +6,9 @@
 <ul>
     {% for product in products %}
     <li>
-        <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+        <a href="{% url 'products:product_detail' product.id %}">{{ product.name }}</a>
     </li>
     {% endfor %}
 </ul>
-<a href="{% url 'vendor_product_create' vendor.id %}">Add New Product</a>
+<a href="{% url 'products:add_product' %}">Add New Product</a>
 {% endblock %}
