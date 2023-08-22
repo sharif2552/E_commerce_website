@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    vendor = models.ForeignKey('vendors.Vendor', on_delete=models.CASCADE)  # Add this line
+    vendor = models.ForeignKey('myuser.Vendor', on_delete=models.CASCADE)  # Add this line
     name = models.CharField(max_length=200)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)

@@ -12,10 +12,13 @@ class Customer(models.Model):
     phone_number = models.CharField(max_length=15)
     profile_picture = models.ImageField(upload_to='customer_profiles/', blank=True, null=True)
     # Add any other customer-specific fields
-
+    def __str__(self):
+        return self.user.username
 class Vendor(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='vendor_profile')
     company_name = models.CharField(max_length=100)
     description = models.TextField()
     logo = models.ImageField(upload_to='vendor_logos/', blank=True, null=True)
     # Add any other vendor-specific fields
+    def __str__(self):
+        return self.user.username

@@ -274,8 +274,8 @@
 										{% for product in products %}
 										<li>
 										<div class="product">
-											<div class="product-img">
-												<img src="{% static 'img/product01.png' %}" alt="">
+											<div class="product-img"  style="width: 220px; height: 250px;">
+												<img src="{{ product.image.url }}" alt="{{ product.name }}">
 												<div class="product-label">
 													<span class="sale">-30%</span>
 													<span class="new">NEW</span>

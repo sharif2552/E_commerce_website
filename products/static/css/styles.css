@@ -1,0 +1,48 @@
+/* Custom styles for the website */
+
+/* Override Bootstrap's default link color */
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff !important;
+}
+
+/* Style for the container */
+.container {
+    margin-top: 30px;
+}
+
+/* Style for the footer */
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+/* Center text vertically in footer */
+footer p {
+    margin: 0;
+    line-height: 2;
+}
+
+/* Style for main headings */
+h1, h2, h3 {
+    margin-bottom: 20px;
+}
+
+/* Add margin to top of headings in content area */
+.container h1, .container h2, .container h3 {
+    margin-top: 20px;
+}
+
+/* Add padding to buttons */
+.btn {
+    padding: 10px 20px;
+}
+
+/* Style for alert messages */
+.alert {
+    margin-top: 20px;
+}
+
+/* Add some space between links in the footer */
+footer a {
+    margin: 0 10px;
+}
