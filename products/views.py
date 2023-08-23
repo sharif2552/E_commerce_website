@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProductForm
 from myuser.models import Vendor
 from .models import Product
+from django.db import models
+
 
 @login_required(login_url='myuser:login')
 def homepage(request):
@@ -38,14 +40,27 @@ def add_product(request):
 from django.shortcuts import render
 from .models import Product
 
+from django.shortcuts import render
+from .models import Category, Product
+
+from django.shortcuts import render
+from .models import Category, Product
+from django.shortcuts import render
+from .models import Category, Product
+
 def filter_products(request):
     # Get the value of the 'category' parameter from the URL query string
     category_id = request.GET.get('category')
-    
-    # Filter products based on the selected category
+
+    # Retrieve all categories and annotate each with product count
+    categories = Category.objects.annotate(product_count=models.Count('product'))
+
+    selected_category = None  # Initialize as None
+
+    products = Product.objects.all()
+
     if category_id:
-        products = Product.objects.filter(category_id=category_id)
-    else:
-        products = Product.objects.all()
-    
-    return render(request, 'filter_products.html', {'products': products})
+        selected_category = int(category_id)  # Convert to int if not None
+        products = products.filter(category_id=selected_category)
+
+    return render(request, 'filter_products.html', {'products': products, 'categories': categories, 'selected_category': selected_category})
