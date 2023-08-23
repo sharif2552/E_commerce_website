@@ -1,0 +1,16 @@
+<ul class="main-menu">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Hot Deals</a></li>
+    <li class="has-dropdown">
+        <a href="#">Categories</a>
+        <ul class="sub-menu">
+            {% for category in categories %}
+                <li><a href="{% url 'products:category_detail' category.id %}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li><a href="#">Laptops</a></li>
+    <li><a href="#">Smartphones</a></li>
+    <li><a href="#">Cameras</a></li>
+    <li><a href="#">Accessories</a></li>
+</ul>

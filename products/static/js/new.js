@@ -16,3 +16,27 @@
         // Redirect to the updated URL
         window.location.href = url.toString();
     }
+
+
+    document.getElementById("categorySelect").addEventListener("change", function() {
+        var selectedCategoryId = this.value;
+        handleCategoryFilter(selectedCategoryId);
+    });
+
+
+    function toggleCategories() {
+        var categoryList = document.getElementById("categoryList");
+        if (categoryList.style.display === "none") {
+            categoryList.style.display = "block";
+        } else {
+            categoryList.style.display = "none";
+        }
+    }
+
+
+
+
+function handleSearch() {
+    var selectedCategoryId = document.getElementById("categorySelect").value;
+    handleCategoryFilter(selectedCategoryId);
+}

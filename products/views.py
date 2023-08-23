@@ -64,3 +64,18 @@ def filter_products(request):
         products = products.filter(category_id=selected_category)
 
     return render(request, 'filter_products.html', {'products': products, 'categories': categories, 'selected_category': selected_category})
+
+
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from .models import Category
+
+from django.shortcuts import render
+from .models import Category  # Import your Category model here
+
+def category_menu(request):
+    categories = Category.objects.all()  # Retrieve all categories
+    return render(request, 'category_menu.html', {'categories': categories})
+
+
+from django.views.generic import DetailView
