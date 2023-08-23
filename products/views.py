@@ -33,3 +33,19 @@ def add_product(request):
         # Exclude the 'vendor' field from the form
 
     return render(request, 'add_product.html', {'form': form})
+
+
+from django.shortcuts import render
+from .models import Product
+
+def filter_products(request):
+    # Get the value of the 'category' parameter from the URL query string
+    category_id = request.GET.get('category')
+    
+    # Filter products based on the selected category
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+    
+    return render(request, 'filter_products.html', {'products': products})

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import CustomerSignUpForm, VendorSignUpForm, CustomerProfileForm, VendorProfileForm
 from myuser.backends import EmailBackend
+from django.contrib.auth import logout
+
 
 from django.contrib.auth import get_user_model
 def login_view(request):
@@ -131,3 +133,8 @@ def vendor_login_view(request):
             error_message = 'Invalid email or password'
             return render(request, 'login.html', {'error_message': error_message})
     return render(request, 'vendor_login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('myuser:login')

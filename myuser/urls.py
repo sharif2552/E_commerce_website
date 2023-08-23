@@ -10,5 +10,6 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'), # Define your login view URL pattern
     # Other URL patterns...
     path('vendor_signup/', views.vendor_signup_view, name='vendor_signup'), # Define your
-    path('vendor_login/', views.vendor_login_view, name='vendor_login') # Define your login view URL pattern
+    path('vendor_login/', views.vendor_login_view, name='vendor_login'), # Define your login view URL pattern
+    path('log_out/', views.logout_view, name='log_out'), # Define your login view URL pattern
 ]
