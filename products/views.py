@@ -9,7 +9,19 @@ from django.db import models
 @login_required(login_url='myuser:login')
 def homepage(request):
     products = Product.objects.all()
-    return render(request, 'homepage.html', {'products': products})
+    category_id = request.GET.get('category')
+
+    # Retrieve all categories and annotate each with product count
+    categories = Category.objects.annotate(product_count=models.Count('product'))
+
+    selected_category = None  # Initialize as None
+
+    products = Product.objects.all()
+
+    if category_id:
+        selected_category = int(category_id)  # Convert to int if not None
+        products = products.filter(category_id=selected_category)
+    return render(request, 'homepage.html', {'products': products, 'categories': categories, 'selected_category': selected_category})
 
 @login_required(login_url='myuser:login')
 def product_detail(request, product_id):
@@ -78,4 +90,5 @@ def category_menu(request):
     return render(request, 'category_menu.html', {'categories': categories})
 
 
-from django.views.generic import DetailView
+
+
