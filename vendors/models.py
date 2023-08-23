@@ -1,13 +1,7 @@
 from django.db import models
+from myuser.models import Vendor
 
 
-class Vendor(models.Model):
-    name = models.CharField(max_length=100)
-    
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
 
 
 class Order(models.Model):  # a single order includes multiple order items
@@ -19,7 +13,7 @@ class Order(models.Model):  # a single order includes multiple order items
         return f"Order {self.id}"
 
 class OrderItem(models.Model): #a single item
-    vendor = models.ForeignKey('vendors.Vendor', on_delete=models.CASCADE)
+    vendor = models.ForeignKey('myuser.Vendor', on_delete=models.CASCADE)
     order = models.ForeignKey('vendors.Order', on_delete=models.CASCADE)
     product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
@@ -36,7 +30,7 @@ class VendorProduct(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock_quantity = models.PositiveIntegerField(default=0) 
 
-    vendor = models.ForeignKey('Vendor', on_delete=models.CASCADE)
+    vendor = models.ForeignKey('myuser.Vendor', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

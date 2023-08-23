@@ -1,14 +1,12 @@
 from django.contrib import admin
-from .models import Vendor, Order, OrderItem , VendorProduct
+from .models import  Order, OrderItem , VendorProduct
 
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
 
 
-@admin.register(Vendor)
-class VendorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
