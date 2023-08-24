@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+
+{% block content %}
+    <h1>Your Cart</h1>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart_item in cart_items %}
+                <tr>
+                    <td>
+                        {% for product in cart_item.products.all %}
+                            {{ product.name }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ cart_item.quantity }}</td>
+                    <td>${{ cart_item.total_price }}</td>
+                    <td>${{ cart_item.total_price|multiply:cart_item.quantity }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Total Price: ${{ total_price }}</p>
+
+    {% comment %} <a href="{% url 'checkout' %}" class="checkout-button">Proceed to Checkout</a> {% endcomment %}
+{% endblock %}

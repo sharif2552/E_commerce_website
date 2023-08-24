@@ -102,3 +102,39 @@ def category_menu(request):
 
 
 
+from django.shortcuts import render, redirect
+from .models import Product, CartItem
+
+def add_to_cart(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    customer = request.user
+    cart_item, created = CartItem.objects.get_or_create(user=customer)
+    
+    cart_item.products.add(product)
+    cart_item.quantity += 1
+    cart_item.save()
+    
+    return redirect('products:cart_view')
+
+
+from django.shortcuts import render
+from .models import CartItem, Product
+
+def cart_view(request):
+    if request.user.is_authenticated:
+        customer = request.user
+        cart_items = CartItem.objects.filter(user=customer)
+        
+        total_price = 0
+        for cart_item in cart_items:
+            cart_item.total_price = sum(product.price for product in cart_item.products.all())
+            total_price += cart_item.total_price * cart_item.quantity
+        
+        return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+    else:
+        # Handle the case when the user is not authenticated
+        # For example, you might want to redirect them to a login page
+        return render(request, 'not_authenticated.html')  # Create this template
+
+
+
