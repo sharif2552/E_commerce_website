@@ -9,11 +9,12 @@ from django.db import models
 @login_required(login_url='myuser:login')
 def homepage(request):
     products = Product.objects.all()
-    category_id = request.GET.get('category')
-
+    category_id = request.POST.get('categorySelect')
+    print(category_id)
+    search_input = request.POST.get('search_input')
     # Retrieve all categories and annotate each with product count
     categories = Category.objects.annotate(product_count=models.Count('product'))
-
+    print(categories)
     selected_category = None  # Initialize as None
 
     products = Product.objects.all()
@@ -60,20 +61,24 @@ from .models import Category, Product
 from django.shortcuts import render
 from .models import Category, Product
 
-def filter_products(request):
-    # Get the value of the 'category' parameter from the URL query string
-    category_id = request.GET.get('category')
+from django.shortcuts import render
+from .models import Product, Category
 
-    # Retrieve all categories and annotate each with product count
+def filter_products(request):
+    category_id = request.GET.get('category')
+    search_input = request.GET.get('search')
+
     categories = Category.objects.annotate(product_count=models.Count('product'))
 
-    selected_category = None  # Initialize as None
-
+    selected_category = None
     products = Product.objects.all()
 
     if category_id:
-        selected_category = int(category_id)  # Convert to int if not None
+        selected_category = int(category_id)
         products = products.filter(category_id=selected_category)
+
+    if search_input:
+        products = products.filter(name__icontains=search_input)
 
     return render(request, 'filter_products.html', {'products': products, 'categories': categories, 'selected_category': selected_category})
 
