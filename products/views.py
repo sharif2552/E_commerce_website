@@ -56,16 +56,7 @@ from .models import Product
 from django.shortcuts import render
 from .models import Category, Product
 
-from django.shortcuts import render
-from .models import Category, Product
-from django.shortcuts import render
-from .models import Category, Product
 
-from django.shortcuts import render
-from .models import Product, Category
-
-from django.shortcuts import render
-from .models import Product, Category
 
 def filter_products(request):
     category_id = request.GET.get('category')
@@ -89,7 +80,7 @@ def filter_products(request):
 
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+
 from .models import Category
 
 from django.shortcuts import render
@@ -105,16 +96,31 @@ def category_menu(request):
 from django.shortcuts import render, redirect
 from .models import Product, CartItem
 
+# views.py
+from django.shortcuts import get_object_or_404
+from orders.models import Order, OrderItem
+
+
+from django.shortcuts import get_object_or_404, redirect
+
 def add_to_cart(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    customer = request.user
-    cart_item, created = CartItem.objects.get_or_create(user=customer)
-    
-    cart_item.products.add(product)
-    cart_item.quantity += 1
-    cart_item.save()
-    
-    return redirect('products:cart_view')
+    if request.method == "POST":
+        product = get_object_or_404(Product, id=product_id)
+        user = request.user
+
+        # Retrieve the user's active (incomplete) order or create a new one
+        order, created = Order.objects.get_or_create(user=user)
+        
+        # Create an OrderItem for the product and add it to the order
+        order_item, item_created = OrderItem.objects.get_or_create(order=order, product=product, defaults={'quantity': 1})
+        
+        if not item_created:
+            order_item.quantity += 1
+            order_item.save()
+
+        return redirect('products:filter_products')  # Redirect to the product detail page or any other appropriate page
+
+
 
 
 from django.shortcuts import render
@@ -123,18 +129,23 @@ from .models import CartItem, Product
 def cart_view(request):
     if request.user.is_authenticated:
         customer = request.user
-        cart_items = CartItem.objects.filter(user=customer)
+        order = Order.objects.filter(user=customer).first()  # Assuming a user has only one active order
         
-        total_price = 0
-        for cart_item in cart_items:
-            cart_item.total_price = sum(product.price for product in cart_item.products.all())
-            total_price += cart_item.total_price * cart_item.quantity
+        cart_items = []  # Initialize an empty list for cart items
+        total_price = 0  # Initialize total price
         
-        return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
-    else:
-        # Handle the case when the user is not authenticated
-        # For example, you might want to redirect them to a login page
-        return render(request, 'not_authenticated.html')  # Create this template
-
+        if order:
+            cart_items = OrderItem.objects.filter(order=order)
+            for cart_item in cart_items:
+                product_price = cart_item.product.price
+                print(f"Product Price: {product_price}")
+            total_price = sum(item.product.price * item.quantity for item in cart_items)
+        
+        context = {
+            
+            'cart_items': cart_items,
+            'total_price': total_price
+        }
+        return render(request, 'cart.html', context)
 
 

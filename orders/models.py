@@ -10,8 +10,8 @@ class Order(models.Model):  # a single order includes multiple order items
         return f"Order {self.id}"
 
 class OrderItem(models.Model): #a single item
-    vendor = models.ForeignKey('myuser.Vendor', on_delete=models.CASCADE)
-    order = models.ForeignKey('orders.Order', on_delete=models.CASCADE)
+    
+    order = models.ForeignKey('orders.Order', on_delete=models.CASCADE, null=True , blank=True) 
     product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
 
