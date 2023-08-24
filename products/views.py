@@ -64,6 +64,9 @@ from .models import Category, Product
 from django.shortcuts import render
 from .models import Product, Category
 
+from django.shortcuts import render
+from .models import Product, Category
+
 def filter_products(request):
     category_id = request.GET.get('category')
     search_input = request.GET.get('search')
@@ -73,13 +76,15 @@ def filter_products(request):
     selected_category = None
     products = Product.objects.all()
 
-    if category_id:
+    if category_id is not None and category_id != "0":
         selected_category = int(category_id)
         products = products.filter(category_id=selected_category)
 
     if search_input:
         products = products.filter(name__icontains=search_input)
-
+    
+    # If no category is selected, do not apply category filtering
+    
     return render(request, 'filter_products.html', {'products': products, 'categories': categories, 'selected_category': selected_category})
 
 
