@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="breadcrumb-header">Checkout</h3>
+						<ul class="breadcrumb-tree">
+							<li><a href="#">Home</a></li>
+							<li class="active">Checkout</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		<div class="col-md-7">
+			<form method="post" action="{% url 'products:checkout' %}">
+				{% csrf_token %}
+				<!-- Billing Details -->
+				<div class="billing-details">
+					<div class="section-title">
+						<h3 class="title">Billing Details</h3>
+					</div>
+					<div class="form-group">
+						<input class="input" type="text" name="first-name" placeholder="First Name" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="text" name="last-name" placeholder="Last Name" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="email" name="email" placeholder="Email" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="text" name="address" placeholder="Address" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="text" name="city" placeholder="City" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="text" name="country" placeholder="Country" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="text" name="zip-code" placeholder="ZIP Code" required>
+					</div>
+					<div class="form-group">
+						<input class="input" type="tel" name="tel" placeholder="Telephone" required>
+					</div>
+				</div>
+				<!-- /Billing Details -->
+		
+				<!-- Order notes -->
+				<div class="order-notes">
+					<textarea class="input" name="order-notes" placeholder="Order Notes"></textarea>
+				</div>
+				<!-- /Order notes -->
+		
+				<button type="submit" class="primary-btn order-submit">Place order</button>
+			</form>
+		</div>
+		
+		<!-- Order Details -->
+		<div class="col-md-5 order-details">
+			<div class="section-title text-center">
+				<h3 class="title">Your Order</h3>
+			</div>
+			<div class="order-summary">
+				<div class="order-col">
+					<div><strong>PRODUCT</strong></div>
+					<div><strong>TOTAL</strong></div>
+				</div>
+				<!-- Loop through cart items and display them -->
+				{% for productt in cart_items %}
+				<div class="order-col">
+					<div>{{ productt.quantity }}x {{ productt.product.name }}</div>
+					<div>${{ productt.product.price }}</div>
+				</div>
+				{% endfor %}
+				<!-- End of cart items loop -->
+		
+				<!-- Display shipping and total -->
+				<div class="order-col">
+					<div><strong>Shipping</strong></div>
+					<div><strong>FREE</strong></div>
+				</div>
+				<div class="order-col">
+					<div><strong>Total</strong></div>
+					<div><strong class="order-total">{{ total_price }}</strong></div>
+				</div>
+				<!-- End of shipping and total -->
+			</div>
+			<div class="payment-method">
+				<div class="input-radio">
+					<input type="radio" name="payment" id="payment-1">
+					<label for="payment-1">
+						<span></span>
+						Bkash Payment
+					</label>
+					<div class="caption">
+						<p>Pay with Bkash</p>
+					</div>
+				</div>
+				<!-- Add more payment method options as needed -->
+			</div>
+			<div class="input-checkbox">
+				<input type="checkbox" id="terms" required>
+				<label for="terms">
+					<span></span>
+					I've read and accept the <a href="#">terms & conditions</a>
+				</label>
+			</div>
+		</div>
+		
+					<!-- /Order Details -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+							<form>
+								<input class="input" type="email" placeholder="Enter Your Email">
+								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
+
+
+{% endblock content %}

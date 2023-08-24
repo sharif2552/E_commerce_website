@@ -21,3 +21,11 @@ class CartItemAdmin(admin.ModelAdmin):
         return ", ".join([product.name for product in obj.products.all()])
     
     get_product_names.short_description = 'Products'
+
+
+from .models import Address
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'email', 'address', 'city', 'country', 'zip_code', 'telephone')
+    list_filter = ('country',)
+    search_fields = ('first_name', 'last_name', 'email', 'address', 'city', 'zip_code', 'telephone')

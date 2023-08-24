@@ -15,4 +15,4 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'order', 'product', 'quantity')  # Display relevant fields for order items
+    list_display = ('id', 'product', 'quantity')  # Display relevant fields for order items

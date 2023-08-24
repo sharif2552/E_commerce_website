@@ -32,6 +32,8 @@
     </table>
 
     <p>Total Price: Taka:{{ total_price }}</p>
+    
+    <button href='{% url 'products:checkout' %}'>checkout</button>
 
     {% comment %} <a href="{% url 'checkout' %}" class="checkout-button">Proceed to Checkout</a> {% endcomment %}
 {% endblock %}

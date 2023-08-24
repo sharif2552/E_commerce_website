@@ -148,4 +148,67 @@ def cart_view(request):
         }
         return render(request, 'cart.html', context)
 
+# checkout/views.py
+from django.shortcuts import render, redirect
+from .models import Address
+from products.models import Product  # Import the Product model
+from django.contrib import messages
 
+def checkout_view(request):
+    if request.method == 'POST':
+        # Retrieve address fields from the form
+        first_name = request.POST['first-name']
+        last_name = request.POST['last-name']
+        email = request.POST['email']
+        address = request.POST['address']
+        city = request.POST['city']
+        country = request.POST['country']
+        zip_code = request.POST['zip-code']
+        telephone = request.POST['tel']
+
+        # Create an Address instance and save it to the database
+        new_address = Address.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            address=address,
+            city=city,
+            country=country,
+            zip_code=zip_code,
+            telephone=telephone,
+        )
+        new_address.save()
+
+        if request.user.is_authenticated:
+            user = request.user
+            order, created = Order.objects.get_or_create(user=user)
+            
+            # Associate the newly created address with the order
+            order.address = new_address
+            order.save()
+
+        messages.success(request, 'Address saved and order placed successfully.')
+        return redirect('products:homepage')  # Redirect back to the checkout page
+    
+
+
+    if request.user.is_authenticated:
+            customer = request.user
+            order = Order.objects.filter(user=customer).first()  # Assuming a user has only one active order
+        
+            cart_items = []  # Initialize an empty list for cart items
+            total_price = 0  # Initialize total price
+        
+    if order:
+            cart_items = OrderItem.objects.filter(order=order)
+            for cart_item in cart_items:
+                product_price = cart_item.product.price
+                print(f"Product Price: {product_price}")
+            total_price = sum(item.product.price * item.quantity for item in cart_items)
+        
+    context = {
+            
+            'cart_items': cart_items,
+            'total_price': total_price
+        }
+    return render(request, 'checkout.html', context)
