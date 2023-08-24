@@ -6,7 +6,7 @@
 
 
 		<!-- NAVIGATION -->
-		hello
+		
 		<nav id="navigation">
 			<div class="container">
 				<div id="responsive-nav">
@@ -146,52 +146,58 @@
 						<!-- store products -->
 						<div class="row">
 							<!-- product -->
-							{% for product in products %}
-							<div class="col-md-4 col-xs-6 product-items ">
-								<div class="product product-item" data-category="{{ product.category.id }}" data-name="{{ product.name }}">
-									<div class="product-img">
-										<img src="{{ product.image.url }}" alt="{{ product.name }}">
-										<div class="product-label">
-											{% if product.discount_percent %}
-											<span class="sale">-{{ product.discount_percent }}%</span>
-											{% endif %}
-											{% if product.is_new %}
-											<span class="new">NEW</span>
-											{% endif %}
+							
+							
+								{% for product in products %}
+								<a href="{% url 'products:product_detail' product.id %}">
+								<div class="col-md-4 col-xs-6 product-items ">
+									<div class="product product-item" data-category="{{ product.category.id }}" data-name="{{ product.name }}">
+										<div class="product-img">
+											<img src="{{ product.image.url }}" alt="{{ product.name }}">
+											<div class="product-label">
+												{% if product.discount_percent %}
+												<span class="sale">-{{ product.discount_percent }}%</span>
+												{% endif %}
+												{% if product.is_new %}
+												<span class="new">NEW</span>
+												{% endif %}
+											</div>
 										</div>
-									</div>
-									<div class="product-body">
-										<p class="product-category">{{ product.category.name }}</p>
-										<h3 class="product-name"><a href="#">{{ product.name }}</a></h3>
-										<h4 class="product-price">
-											{% if product.discount_price %}
-											${{ product.discount_price|floatformat:2 }}
-											<del class="product-old-price">${{ product.price|floatformat:2 }}</del>
-											{% else %}
-											${{ product.price|floatformat:2 }}
-											{% endif %}
-										</h4>
-										{% comment %} <div class="product-rating">
-											{% for _ in product.rating|default:0 %}
-											<i class="fa fa-star"></i>
-											{% endfor %}
-										</div> {% endcomment %}
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+										<div class="product-body">
+											<p class="product-category">{{ product.category.name }}</p>
+											<h3 class="product-name">{{ product.name }}</h3>
+											<h4 class="product-price">
+												{% if product.discount_price %}
+												${{ product.discount_price|floatformat:2 }}
+												<del class="product-old-price">${{ product.price|floatformat:2 }}</del>
+												{% else %}
+												${{ product.price|floatformat:2 }}
+												{% endif %}
+											</h4>
+											{% comment %} <div class="product-rating">
+												{% for _ in product.rating|default:0 %}
+												<i class="fa fa-star"></i>
+												{% endfor %}
+											</div> {% endcomment %}
+										</a>
+											<div class="product-btns">
+												<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+											</div>
 										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										</div>
 									</div>
 								</div>
-							</div>
-							<!-- /product -->
-							{% if forloop.counter|divisibleby:3 and not forloop.last %}
-							<div class="clearfix visible-sm visible-xs"></div>
-							{% endif %}
-							{% endfor %}
+								<!-- /product -->
+								{% if forloop.counter|divisibleby:3 and not forloop.last %}
+								<div class="clearfix visible-sm visible-xs"></div>
+								{% endif %}
+								
+								{% endfor %}
+							
 						</div>
 						
 						<!-- /store products -->
