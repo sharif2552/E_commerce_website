@@ -212,3 +212,9 @@ def checkout_view(request):
             'total_price': total_price
         }
     return render(request, 'checkout.html', context)
+
+
+# from sslcommerz_python.payment import SSLCSession
+# from decimal import Decimal
+# import socket
+# def payment(request):

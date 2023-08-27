@@ -33,7 +33,7 @@
 
     <p>Total Price: Taka:{{ total_price }}</p>
     
-    <button href='{% url 'products:checkout' %}'>checkout</button>
+    <button><a href="{% url 'products:checkout' %}">checkout</a> </button>
 
     {% comment %} <a href="{% url 'checkout' %}" class="checkout-button">Proceed to Checkout</a> {% endcomment %}
 {% endblock %}
