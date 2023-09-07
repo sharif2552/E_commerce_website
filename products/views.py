@@ -112,7 +112,7 @@ def add_to_cart(request, product_id):
         order, created = Order.objects.get_or_create(user=user)
         
         # Create an OrderItem for the product and add it to the order
-        order_item, item_created = OrderItem.objects.get_or_create(order=order, product=product, defaults={'quantity': 1})
+        order_item, item_created = OrderItem.objects.get_or_create(user= request.user, order=order, product=product, defaults={'quantity': 1})
         
         if not item_created:
             order_item.quantity += 1
@@ -133,18 +133,20 @@ def cart_view(request):
         
         cart_items = []  # Initialize an empty list for cart items
         total_price = 0  # Initialize total price
-        
+        item_totals = []
         if order:
             cart_items = OrderItem.objects.filter(order=order)
             for cart_item in cart_items:
                 product_price = cart_item.product.price
                 print(f"Product Price: {product_price}")
+                item_totals.append(product_price)
             total_price = sum(item.product.price * item.quantity for item in cart_items)
         
         context = {
             
             'cart_items': cart_items,
-            'total_price': total_price
+            'item_totals': item_totals,
+            'total_price': total_price,
         }
         return render(request, 'cart.html', context)
 
@@ -164,8 +166,12 @@ def checkout_view(request):
                 product_price = cart_item.product.price
                 print(f"Product Price: {product_price}")
     total_price = sum(item.product.price * item.quantity for item in cart_items)  #total price
+
     order.Total = total_price
     order.save()       
+
+
+
     if request.method == 'POST':
         # Retrieve address fields from the form
         first_name = request.POST['first-name']

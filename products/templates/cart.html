@@ -6,39 +6,53 @@
 {% block content %}
     <h1>Your Cart</h1>
 
-    <table class="table">
+    <table class="table ">
         <thead>
             <tr>
                 <th>#</th>
-                <th class="p-3 mb-2 text-white bg-dark">Product</th>
+                <th class="p-3 mb-2 text-white bg-pink">Product</th>
                 <th>Quantity</th>
-                <th>Price</th>
+                <th> Single Price</th>
+                <th> Item Total </th>
                
             </tr>
         </thead>
         <tbody>
             {% for productt in cart_items %}
-                <tr >
-                    <td>
-                        
-                        {{ productt.product.id }}<br>
-                    
+            <tr>
+                <td>{{ productt.product.id }}</td>
+                <td>{{ productt.product.name }}</td>
+                <td>
+                    <form method="post" action="{% url 'orders:increase_quantity' productt.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">+</button>
+                    </form>
+                    {{ productt.quantity }}
+                    <form method="post" action="{% url 'orders:decrease_quantity' productt.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">-</button>
+                    </form>
                 </td>
-                    <td>
-                        
-                            {{ productt.product.name }}<br>
-                        
-                    </td>
-                    <td>{{ productt.quantity }}</td>
-                    <td>৳ {{ productt.product.price }}</td>
-                   
-                </tr>
-            {% endfor %}
+                <td>৳ {{ productt.product.price }}</td>
+                <td>৳ {{ productt.product.price|multiply:productt.quantity }}</td> <!-- Use |mul filter to multiply -->
+                <td>
+                    <form method="post" action="{% url 'orders:remove_item' productt.product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        
+        
+            
+            
         </tbody>
     </table>
 
-    <p>Total Price: ৳:{{ total_price }}</p>
-    
+    <h3><strong class="order-total">Total: ৳{{ total_price }}</strong></h3>
+
+
     <button><a href="{% url 'products:checkout' %}">checkout</a> </button>
 
     {% comment %} <a href="{% url 'checkout' %}" class="checkout-button">Proceed to Checkout</a> {% endcomment %}

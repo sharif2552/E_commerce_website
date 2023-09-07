@@ -150,6 +150,8 @@ from django.contrib.auth.decorators import login_required
 def my_account(request):
     user = request.user
     if user.is_customer:
+        print(user)
+        print(user.is_customer)
         profile = user.customer_profile
         user_type = 'Customer'
     elif user.is_vendor:

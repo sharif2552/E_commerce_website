@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container my-4"> <!-- Add the "my-4" class to increase the top and bottom margin -->
     
-    <h2 class="">Welcome to your My Account page, {{ user.username }}!</h2>
+    <h2 class="">Welcome to your My Account page, <br>{{ user.username }}!</h2>
     <p>User Type: {{ user_type }}</p>
 
     {% if profile %}

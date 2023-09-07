@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'myuser',
     'orders',
     'payments.apps.PaymentsConfig', # new
+    
 ]
 
 MIDDLEWARE = [

@@ -83,12 +83,14 @@
 												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 											</div>
 										</div>
-										<form method="POST" action="{% url 'products:add_to_cart' product.id %}">
-											{% csrf_token %}
+
 										<div class="add-to-cart">
-											<button class="add-to-cart-btn" id="add-to-cart-button"><i class="fa fa-shopping-cart add-to-cart-btn"></i> Add to Cart</button>
+											<form method="POST" action="{% url 'products:add_to_cart' product.id %}">
+												{% csrf_token %}
+											<button class="add-to-cart-btn" ><i class="fa fa-shopping-cart "></i> Add to Cart</button>
+											</form>
 										</div>
-										</form>
+									
 										
 										
 									</div>
