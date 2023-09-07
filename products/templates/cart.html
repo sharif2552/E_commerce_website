@@ -6,10 +6,11 @@
 {% block content %}
     <h1>Your Cart</h1>
 
-    <table class="cart-table">
+    <table class="table">
         <thead>
             <tr>
-                <th>Product</th>
+                <th>#</th>
+                <th class="p-3 mb-2 text-white bg-dark">Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
                
@@ -17,21 +18,26 @@
         </thead>
         <tbody>
             {% for productt in cart_items %}
-                <tr>
+                <tr >
+                    <td>
+                        
+                        {{ productt.product.id }}<br>
+                    
+                </td>
                     <td>
                         
                             {{ productt.product.name }}<br>
                         
                     </td>
                     <td>{{ productt.quantity }}</td>
-                    <td>${{ productt.product.price }}</td>
+                    <td>৳ {{ productt.product.price }}</td>
                    
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <p>Total Price: Taka:{{ total_price }}</p>
+    <p>Total Price: ৳:{{ total_price }}</p>
     
     <button><a href="{% url 'products:checkout' %}">checkout</a> </button>
 

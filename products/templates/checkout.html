@@ -82,7 +82,7 @@
 				{% for productt in cart_items %}
 				<div class="order-col">
 					<div>{{ productt.quantity }}x {{ productt.product.name }}</div>
-					<div>${{ productt.product.price }}</div>
+					<div>৳{{ productt.product.price }}</div>
 				</div>
 				{% endfor %}
 				<!-- End of cart items loop -->
@@ -94,7 +94,7 @@
 				</div>
 				<div class="order-col">
 					<div><strong>Total</strong></div>
-					<div><strong class="order-total">{{ total_price }}</strong></div>
+					<div><strong class="order-total">৳{{ total_price }}</strong></div>
 				</div>
 				<!-- End of shipping and total -->
 			</div>
