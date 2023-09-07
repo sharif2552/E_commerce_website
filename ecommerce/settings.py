@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'vendors',
     'myuser',
     'orders',
+    'payments.apps.PaymentsConfig', # new
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51NnKxYDfaIDE5Oxo4XoGAodc1jgUqDCczvRy6RFVcqoeQRlHU0TiCfDRtdh6IBMEuYGbOWqk5WdPfo2m7T6hqnXz00u1M6kETO'
+STRIPE_SECRET_KEY = 'sk_test_51NnKxYDfaIDE5OxoPtVVbRRn3mbgkojbExUOMfhAxkUwoN8Hem8JxO18eCjwdL9TnJWskLiG95a4x90l49wX8ReX00mrcnOuCI'

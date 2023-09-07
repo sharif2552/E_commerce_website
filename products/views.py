@@ -188,7 +188,7 @@ def checkout_view(request):
             order.save()
 
         messages.success(request, 'Address saved and order placed successfully.')
-        return redirect('products:homepage')  # Redirect back to the checkout page
+        return redirect('payments:home')  # Redirect back to the checkout page
     
 
 
