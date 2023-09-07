@@ -138,3 +138,29 @@ def vendor_login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('myuser:login')
+
+
+
+# myapp/views.py
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_account(request):
+    user = request.user
+    if user.is_customer:
+        profile = user.customer_profile
+        user_type = 'Customer'
+    elif user.is_vendor:
+        profile = user.vendor_profile
+        user_type = 'Vendor'
+    else:
+        profile = None
+        user_type = 'Regular User'
+
+    context = {
+        'user_type': user_type,
+        'profile': profile,
+    }
+    return render(request, 'my_account.html', context)

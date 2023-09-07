@@ -1,0 +1,37 @@
+<!-- base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Website Title{% endblock %}</title>
+    <!-- Include your CSS and JavaScript files here -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Include any other meta tags, stylesheets, or scripts here -->
+
+</head>
+<body>
+    <header>
+        <!-- Your website header content goes here -->
+        <nav>
+            <!-- Your navigation menu goes here -->
+        </nav>
+    </header>
+
+    <main >
+        {% block content %}
+            <!-- The specific content of each page will be inserted here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Your website footer content goes here -->
+    </footer>
+    
+    <!-- Include your JavaScript files or scripts here -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Include any other scripts or libraries here -->
+
+</body>
+</html>

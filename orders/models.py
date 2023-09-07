@@ -10,6 +10,7 @@ class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE , null = True, blank = True)
+    Total = models.IntegerField(null=True, blank = True)
     def __str__(self):
         return f"Order {self.id}"
 

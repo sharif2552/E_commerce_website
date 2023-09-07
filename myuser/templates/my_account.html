@@ -1,0 +1,22 @@
+<!-- myapp/templates/myapp/my_account.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-4"> <!-- Add the "my-4" class to increase the top and bottom margin -->
+    
+    <h2 class="">Welcome to your My Account page, {{ user.username }}!</h2>
+    <p>User Type: {{ user_type }}</p>
+
+    {% if profile %}
+    <h3>Your Profile Details</h3>
+    {% if user.is_customer %}
+    <p>Address: {{ profile.address }}</p>
+    <p>Phone Number: {{ profile.phone_number }}</p>
+    {% elif user.is_vendor %}
+    <p>Company Name: {{ profile.company_name }}</p>
+    <p>Description: {{ profile.description }}</p>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -6,23 +6,34 @@ from django.http.response import JsonResponse # new
 from django.views.decorators.csrf import csrf_exempt # new
 from django.views.generic.base import TemplateView
 from django.http.response import JsonResponse, HttpResponse
-
+from orders.models import Order
 class HomePageView(TemplateView):
     template_name = 'home.html'
+
 
 
 # new
 @csrf_exempt
 def stripe_config(request):
+   
+
     if request.method == 'GET':
         stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
         return JsonResponse(stripe_config, safe=False)
     
-price = 10000
-    
+
 @csrf_exempt
 def create_checkout_session(request):
+    print(request.user)
+    order = Order.objects.filter(user= request.user) .first()
+    print(order)
+    price = order.Total   * 100
+    print(price)
+    
+    #################################################################
+
     if request.method == 'GET':
+
         domain_url = 'http://localhost:8000/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
@@ -43,7 +54,7 @@ def create_checkout_session(request):
                 line_items=[
                     {
                         'price_data': {
-                            'currency': 'usd',
+                            'currency': 'bdt',
                             'unit_amount': price,  # The amount in cents
                             'product_data': {
                                 'name': 'Total Amount',

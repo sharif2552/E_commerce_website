@@ -107,7 +107,7 @@ def add_to_cart(request, product_id):
     if request.method == "POST":
         product = get_object_or_404(Product, id=product_id)
         user = request.user
-
+        Total = 0
         # Retrieve the user's active (incomplete) order or create a new one
         order, created = Order.objects.get_or_create(user=user)
         
@@ -155,6 +155,17 @@ from products.models import Product  # Import the Product model
 from django.contrib import messages
 
 def checkout_view(request):
+    user = request.user
+    order, created = Order.objects.get_or_create(user=user)
+    cart_items = OrderItem.objects.filter(order=order)
+
+
+    for cart_item in cart_items:
+                product_price = cart_item.product.price
+                print(f"Product Price: {product_price}")
+    total_price = sum(item.product.price * item.quantity for item in cart_items)  #total price
+    order.Total = total_price
+    order.save()       
     if request.method == 'POST':
         # Retrieve address fields from the form
         first_name = request.POST['first-name']
@@ -179,33 +190,20 @@ def checkout_view(request):
         )
         new_address.save()
 
-        if request.user.is_authenticated:
-            user = request.user
-            order, created = Order.objects.get_or_create(user=user)
-            
+
             # Associate the newly created address with the order
-            order.address = new_address
-            order.save()
+        order.address = new_address
+        order.Total = total_price
+        order.save()
 
         messages.success(request, 'Address saved and order placed successfully.')
         return redirect('payments:home')  # Redirect back to the checkout page
-    
+
+            
 
 
-    if request.user.is_authenticated:
-            customer = request.user
-            order = Order.objects.filter(user=customer).first()  # Assuming a user has only one active order
-        
-            cart_items = []  # Initialize an empty list for cart items
-            total_price = 0  # Initialize total price
-        
-    if order:
-            cart_items = OrderItem.objects.filter(order=order)
-            for cart_item in cart_items:
-                product_price = cart_item.product.price
-                print(f"Product Price: {product_price}")
-            total_price = sum(item.product.price * item.quantity for item in cart_items)
-        
+    cart_items = OrderItem.objects.filter(order=order)
+
     context = {
             
             'cart_items': cart_items,
